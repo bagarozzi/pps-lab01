@@ -1,5 +1,6 @@
 import example.model.AccountHolder;
 import example.model.BankAccount;
+import example.model.BankAccountWithFees;
 import example.model.SimpleBankAccount;
 
 import org.junit.jupiter.api.*;
@@ -10,22 +11,22 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class SimpleBankAccountTest {
 
-    private static final String HOLDER_NAME = "Mario";
-    private static final String HOLDER_SURNAME = "Rossi";
-    private static final int HOLDER_ID = 1;
-    private static final int INITIAL_BALANCE = 0;
+    public static final String HOLDER_NAME = "Mario";
+    public static final String HOLDER_SURNAME = "Rossi";
+    public static final int HOLDER_ID = 1;
+    public static final int INITIAL_BALANCE = 0;
 
-    private static final int WRONG_HOLDER_ID = 2;
+    public static final int WRONG_HOLDER_ID = 2;
 
-    private static final int DEPOSIT_QUANTITY = 100;
-    private static final int WITHDRAW_QUANTITY = 70;
-    private static final int BALANCE_DIFFERENCE = 30;
+    public static final int DEPOSIT_QUANTITY = 100;
+    public static final int WITHDRAW_QUANTITY = 70;
+    public static final int BALANCE_DIFFERENCE = 30;
 
-    private static final int WITHDRAWAL_FEE = 1;
+    public static final int WITHDRAWAL_FEE = 1;
 
 
-    private AccountHolder accountHolder;
-    private BankAccount bankAccount;
+    protected AccountHolder accountHolder;
+    protected BankAccount bankAccount;
 
     @BeforeEach
     void beforeEach(){
@@ -54,18 +55,12 @@ class SimpleBankAccountTest {
     @Test
     void testWithdraw() {
         depositAndWithdraw(accountHolder.id(), DEPOSIT_QUANTITY, WITHDRAW_QUANTITY);
-        assertEquals(BALANCE_DIFFERENCE - WITHDRAWAL_FEE, bankAccount.getBalance());
+        assertEquals(BALANCE_DIFFERENCE, bankAccount.getBalance());
     }
 
     @Test
     void testWrongWithdraw() {
         depositAndWithdraw(WRONG_HOLDER_ID, DEPOSIT_QUANTITY, WITHDRAW_QUANTITY);
-        assertEquals(DEPOSIT_QUANTITY, bankAccount.getBalance());
-    }
-
-    @Test
-    void testWithdrawNotAllowed(){
-        depositAndWithdraw(accountHolder.id(), DEPOSIT_QUANTITY, DEPOSIT_QUANTITY);
         assertEquals(DEPOSIT_QUANTITY, bankAccount.getBalance());
     }
 
