@@ -2,6 +2,12 @@ package tdd;
 
 public class SmartDoorLockImpl implements SmartDoorLock {
 
+    private final int maxAttempts;
+
+    public SmartDoorLockImpl(final int maxAttempts) {
+        this.maxAttempts = maxAttempts;
+    }
+
     @Override
     public void setPin(int pin) {
 
@@ -29,7 +35,7 @@ public class SmartDoorLockImpl implements SmartDoorLock {
 
     @Override
     public int getMaxAttempts() {
-        return 0;
+        return maxAttempts;
     }
 
     @Override
