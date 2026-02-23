@@ -21,6 +21,8 @@ class SimpleBankAccountTest {
     private static final int WITHDRAW_QUANTITY = 70;
     private static final int BALANCE_DIFFERENCE = 30;
 
+    private static final int WITHDRAWAL_FEE = 1;
+
 
     private AccountHolder accountHolder;
     private BankAccount bankAccount;
@@ -52,12 +54,18 @@ class SimpleBankAccountTest {
     @Test
     void testWithdraw() {
         depositAndWithdraw(accountHolder.id(), DEPOSIT_QUANTITY, WITHDRAW_QUANTITY);
-        assertEquals(BALANCE_DIFFERENCE, bankAccount.getBalance());
+        assertEquals(BALANCE_DIFFERENCE - WITHDRAWAL_FEE, bankAccount.getBalance());
     }
 
     @Test
     void testWrongWithdraw() {
         depositAndWithdraw(WRONG_HOLDER_ID, DEPOSIT_QUANTITY, WITHDRAW_QUANTITY);
+        assertEquals(DEPOSIT_QUANTITY, bankAccount.getBalance());
+    }
+
+    @Test
+    void testWithdrawNotAllowed(){
+        depositAndWithdraw(accountHolder.id(), DEPOSIT_QUANTITY, DEPOSIT_QUANTITY);
         assertEquals(DEPOSIT_QUANTITY, bankAccount.getBalance());
     }
 
